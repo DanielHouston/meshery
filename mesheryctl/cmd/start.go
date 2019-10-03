@@ -71,16 +71,18 @@ var startCmd = &cobra.Command{
 		for _, container := range containers {
 			if "/meshery_meshery_1" == container.Names[0] {
 				log.Info("Opening Meshery in your broswer. If Meshery does not open, please point your browser to http://localhost:9081 to access Meshery.")
-				ostype, err := exec.Command("uname", "-s").Output()
-				if err != nil {
-					log.Fatal("Unable to detect OS type. Warning message: \n", err)
-				}
-				os := strings.TrimSpace(string(ostype))
+				ostype := runtime.GOOS
 				// Link to Meshery User Interface
 				url := "http://localhost:9081"
-				if os == "Linux" {
+				if strings.HasPrefix(ostype, "linux") {
 					// Meshery running on Linux host
 					exec.Command("xdg-open", url).Start()
+				} else if strings.HasPrefix(ostype, "windows") {
+					// Meshery running on Windows host
+					exec.Command("start", url).Start()
+				} else if strings.HasPrefix(ostype, "darwin") {
+					// Meshery running on Mac host
+					exec.Command("open", url).Start()
 				} else {
 					// Asssume Meshery running on MacOS host
 					exec.Command("open", url).Start()
