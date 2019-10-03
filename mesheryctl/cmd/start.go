@@ -19,6 +19,7 @@ import (
 	"context"
 	"os"
 	"os/exec"
+	"runtime"
 	"strings"
 
 	"github.com/docker/docker/api/types"
