@@ -43,7 +43,6 @@ var initCmd = &cobra.Command{
 			if err != nil {
 				// download the default version as 1.24.1 if unable to fetch newest page data
 				dockerComposeBinaryURL = dockerComposeBinaryURL + "1.24.1/docker-compose"
-				//fmt.Print(dockerComposeBinaryURL)
 			} else {
 				var dat map[string]interface{}
 				body, _ := ioutil.ReadAll(resp.Body)
@@ -53,7 +52,7 @@ var initCmd = &cobra.Command{
 				num := dat["tag_name"]
 
 				dockerComposeBinaryURL = dockerComposeBinaryURL + fmt.Sprintf("%v", num) + "/docker-compose"
-				//fmt.Print(dockerComposeBinaryURL)
+
 			}
 			dockerComposeBinaryURL = dockerComposeBinaryURL + "-" + osdetails
 			if err := downloadFile(dockerComposeBinary, dockerComposeBinaryURL); err != nil {
